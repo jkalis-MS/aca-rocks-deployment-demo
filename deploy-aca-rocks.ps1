@@ -23,6 +23,7 @@ az acr build `
     --image "aca-rocks:$Timestamp" `
     --image "aca-rocks:latest" `
     --file Dockerfile `
+    --output none `
     .
 Write-Host "✅ Image pushed to ACR" -ForegroundColor Green
 
@@ -41,19 +42,26 @@ $LogAnalyticsId = az monitor log-analytics workspace show `
 $AcrCreds = az acr credential show --name $AcrName --query "{username:username, password:passwords[0].value}" -o json | ConvertFrom-Json
 
 # Step 2: Deploy with containerapp up (will create new environment)
-Write-Host "`n🚀 Step 3: Deploying with 'az containerapp up'..." -ForegroundColor Yellow
-az containerapp up `
+Write-Host "`n🚀 Step 2: Deploying with 'az containerapp up'..." -ForegroundColor Yellow
+$DeployOutput = az containerapp up `
     --name $AppName `
     --resource-group $ResourceGroup `
     --location $Location `
-    --environment $EnvName `
     --image $ImageName `
     --target-port 8080 `
     --ingress external `
     --registry-server $AcrLoginServer `
     --registry-username $AcrCreds.username `
     --registry-password $AcrCreds.password `
-    --logs-workspace-id $LogAnalyticsId
+    --logs-workspace-id $LogAnalyticsId 2>&1
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "✅ Container app deployed" -ForegroundColor Green
+} else {
+    Write-Host "❌ Deployment failed" -ForegroundColor Red
+    Write-Host $DeployOutput
+    exit 1
+}
 
 $EndTime = Get-Date
 $TotalDuration = ($EndTime - $StartTime).TotalSeconds

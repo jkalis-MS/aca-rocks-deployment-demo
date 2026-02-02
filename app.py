@@ -50,7 +50,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         </head>
         <body>
             <div id="score">Score: 0</div>
-            <div id="info">Use ← → arrow keys to move</div>
+            <div id="info">Use &larr; &rarr; arrow keys to catch the apps!</div>
             <canvas id="gameCanvas"></canvas>
             <script>
                 const canvas = document.getElementById('gameCanvas');

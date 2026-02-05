@@ -20,3 +20,7 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Jan's
+plan.md
+.gitignore

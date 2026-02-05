@@ -17,9 +17,9 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             
             if data['type'] == 'caught':
-                print(f"Score: {data['score']}, Missed: {data['missed']}")
+                print(f"🎯 Score: {data['score']}, Missed: {data['missed']}", file=sys.stderr, flush=True)
             elif data['type'] == 'missed':
-                print(f"Score: {data['score']}, Missed: {data['missed']}")
+                print(f"❌ Score: {data['score']}, Missed: {data['missed']}", file=sys.stderr, flush=True)
             
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -37,7 +37,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         html = """
         <html>
         <head>
-            <title>ACA ROCKS! - Catch the Apps!</title>
+            <title>ACA ROCKS! - Catch the Apps! (v2)</title>
             <style>
                 body { 
                     margin: 0; 

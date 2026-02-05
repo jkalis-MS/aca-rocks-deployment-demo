@@ -1,0 +1,22 @@
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Azure
+.azure/
+
+# OS
+.DS_Store
+Thumbs.db

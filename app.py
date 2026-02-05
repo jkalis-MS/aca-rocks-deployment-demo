@@ -9,6 +9,26 @@ import threading
 PORT = 8080
 
 class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def do_POST(self):
+        if self.path == '/log':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            import json
+            data = json.loads(post_data.decode('utf-8'))
+            
+            if data['type'] == 'caught':
+                print(f"Score: {data['score']}, Missed: {data['missed']}")
+            elif data['type'] == 'missed':
+                print(f"Score: {data['score']}, Missed: {data['missed']}")
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(b'{"status": "ok"}')
+        else:
+            self.send_response(404)
+            self.end_headers()
+    
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
@@ -59,6 +79,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                 canvas.height = window.innerHeight;
                 
                 let score = 0;
+                let missed = 0;
                 let appCounter = 1;
                 let playerX = canvas.width / 2 - 150;
                 const playerY = canvas.height - 120;
@@ -129,11 +150,24 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
                             document.getElementById('score').textContent = `Score: ${score}`;
                             apps.splice(index, 1);
                             console.log(`Caught ${app.label}! Score: ${score}`);
+                            // Send to server
+                            fetch('/log', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({type: 'caught', score: score, missed: missed})
+                            });
                         }
                         
                         // Remove if off screen
                         if (app.y > canvas.height) {
+                            missed++;
                             apps.splice(index, 1);
+                            // Send to server
+                            fetch('/log', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({type: 'missed', score: score, missed: missed})
+                            });
                         }
                     });
                 }

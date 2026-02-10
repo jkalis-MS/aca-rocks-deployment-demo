@@ -19,11 +19,6 @@ az containerapp up `
     --source .
 
 ```
-
-## Usage
-
-Run `.\deploy-aca-rocks.ps1` to build, push, and deploy a new container app with a fresh environment. The script outputs two timers: total deployment time and ACA resource creation time (excluding ACR build).
-
 ---
 
 ## 🐳 How to Create a Dockerfile (From Easiest to Hardest)

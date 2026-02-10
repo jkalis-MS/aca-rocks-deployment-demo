@@ -28,20 +28,9 @@ Run `.\deploy-aca-rocks.ps1` to build, push, and deploy a new container app with
 
 ## 🐳 How to Create a Dockerfile (From Easiest to Hardest)
 
-New to containers? Here are **7 ways** to create a Dockerfile, sorted from simplest to most advanced. Many options **don't require Docker Desktop** at all.
+New to containers? Here are **many ways** to create a Dockerfile, sorted from simplest to most advanced. Many options **don't require Docker Desktop** at all.
 
-### 1. ✨ `az containerapp up --source .` (No Dockerfile Needed!)
-**Difficulty:** ⭐ | **No Docker Desktop Required** 
-
-The easiest option — skip the Dockerfile entirely! Azure Container Apps can build your app from source code automatically using cloud-based Buildpacks.
-
-```powershell
-az containerapp up --name my-app --source .
-```
-
-Azure detects your language (Python, Node.js, .NET, Java, Go) and generates a container image for you in the cloud. No Dockerfile, no Docker Desktop, no container knowledge required.
-
-### 2. 🤖 GitHub Copilot in VS Code
+### 1. 🤖 GitHub Copilot in VS Code
 **Difficulty:** ⭐ | **Docker Desktop Required**
 
 Ask Copilot Chat to generate a Dockerfile for your project:
@@ -53,7 +42,7 @@ Copilot analyzes your project structure and generates an optimized Dockerfile. Y
 > *"Make it use Alpine for a smaller image"*
 > *"Add a health check"*
 
-### 3. 📦 VS Code Extension "Microsoft Containers"
+### 2. 📦 VS Code Extension "Microsoft Containers"
 **Difficulty:** ⭐⭐ | **Docker Desktop Required**
 
 Install the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) (`ms-azuretools.vscode-docker`), then:
@@ -65,7 +54,7 @@ Install the [Docker extension](https://marketplace.visualstudio.com/items?itemNa
 
 > **Tip:** You don't need Docker Desktop installed to *author* Dockerfiles — only to *build* locally. Use ACR to build in the cloud instead (see option 6).
 
-### 4. 📝 Use a Template from Docker Hub / GitHub
+### 3. 📝 Use a Template from Docker Hub / GitHub
 **Difficulty:** ⭐⭐ | **Docker Desktop Required**
 
 Start from a proven template:
